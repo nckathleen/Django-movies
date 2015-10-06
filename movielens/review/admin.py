@@ -4,12 +4,15 @@ from .models import Movie, Rater, Rating
 
 # Register your models here
 class MovieAdmin(admin.ModelAdmin):
+    pass
     #list_display = ['title', 'rating_count']
 
-class RaterAdmin(admin.ModelAdmin):
 
+class RaterAdmin(admin.ModelAdmin):
+    pass
 
 class RatingAdmin(admin.ModelAdmin):
+    pass
 #    list_display = ['rating', 'rating_count']
 
 
