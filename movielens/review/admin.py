@@ -9,11 +9,11 @@ class MovieAdmin(admin.ModelAdmin):
 
 
 class RaterAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['id', 'gender']
 
 
 class RatingAdmin(admin.ModelAdmin):
-    # list_display = ['rating', 'rating_count']
+    list_display = ['rating']
 
 
 admin.site.register(Movie, MovieAdmin)
