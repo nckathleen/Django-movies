@@ -76,25 +76,24 @@ def load_ml_data():
     # #     f.write(json.dumps(users))
 
     # print(json.dumps(users, sort_keys=True, indent=4, separators=(',', ': ')))
+    #
+    movies = []
 
-    ratings = []
-
-    with open('ml-1m/ratings.dat') as f:
+    with open('ml-1m/movies.dat', encoding='Windows-1252') as f:
 
         reader = csv.DictReader([line.replace('::', '\t') for line in f],
-                                fieldnames='UserID::MovieID::Rating'.split('::'),
+                                fieldnames='MovieID::Title'.split('::'),
                                 delimiter='\t')
         for row in reader:
-            rating = {
+            movie = {
                 'fields': {
-                    'movieid': row['MovieID'],
-                    'rating': row['Rating'],
+                    'title': row['Title'],
                 },
-                'model': 'moviedb.Rating',
-                'pk': int(row['UserID'])
+                'model': 'moviedb.Movie',
+                'pk': int(row['MovieID'])
             }
 
-            ratings.append(rating)
+            movies.append(movie)
 
-    with open('ratings.json', 'w') as f:   # place to dump/put the data
-        f.write(json.dumps(ratings))
+    with open('movies.json', 'w') as f:   # place to dump/put the data
+        f.write(json.dumps(movies))
