@@ -18,4 +18,4 @@ class RatingAdmin(admin.ModelAdmin):
 
 admin.site.register(Movie, MovieAdmin)
 admin.site.register(Rater, RaterAdmin)
-admin.site.register(Rating, RatingAdmin)
+admin.site.register(Rating)
