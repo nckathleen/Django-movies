@@ -5,15 +5,15 @@ from .models import Movie, Rater, Rating
 # Register your models here
 class MovieAdmin(admin.ModelAdmin):
     pass
-    #list_display = ['title', 'rating_count']
+    # list_display = ['title', 'rating_count']
 
 
 class RaterAdmin(admin.ModelAdmin):
     pass
 
+
 class RatingAdmin(admin.ModelAdmin):
-    pass
-#    list_display = ['rating', 'rating_count']
+    # list_display = ['rating', 'rating_count']
 
 
 admin.site.register(Movie, MovieAdmin)
