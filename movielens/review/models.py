@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -21,6 +23,28 @@ class Rater(models.Model):
     def __str__(self):
         return self.id
 
+#
+# class Profile(models.Model):
+#     # user = User.objects.create_user()
+#     user = models.OneToOneField(User)
+#
+#     def __unicode__(self):
+#         return self.user.get_rater()
+    # def load_fake_data():
+    #     '''Create some fake users'''
+    #     from faker import Faker
+    #
+    #     fake = Faker()
+    #
+    #     users = []
+    #     for _ in range(50):
+    #         new_user = User(
+    #             username=fake.user_name(),
+    #             email=fake.email(),
+    #             password=fake.password())
+    #         new_user.save()
+    #         users.append(new_user)
+
 
 class Movie(models.Model):
     # movie = models.ForeignKey()
@@ -28,9 +52,6 @@ class Movie(models.Model):
 
     def average_rating(self):
         return self.rating_set.aggregate(models.Avg('rating'))['rating_avg']
-
-    def rating_count(self):
-        return self.rating_set.count()
 
     def __str__(self):
         return self.title
@@ -46,13 +67,18 @@ class Rating(models.Model):
             .format(self.rater, self.movie, self.rating)
 
 
+class Profile(models.Model):
+    # user = User.objects.create_user()
+    user = models.OneToOneField(User, primary_key=True)
+
+
+
 def load_ml_data():
 
     import csv
     import json
 
-
- Code used to import files for Movies, Ratings, and Raters.
+    # Code used to import files for Movies, Ratings, and Raters.
     users = []
 
     with open('ml-1m/users.dat') as f:
@@ -104,8 +130,9 @@ def load_ml_data():
     with open('ml-1m/ratings.dat', encoding='Windows-1252') as f:
 
         reader = csv.DictReader([line.replace('::', '\t') for line in f],
-                                    fieldnames='UserID::MovieID::Rating'.split('::'),
-                                    delimiter='\t')
+                                fieldnames='UserID::MovieID::Rating'.split(
+                                    '::'),
+                                delimiter='\t')
         for row in reader:
             rating = {
                 'fields': {
