@@ -52,52 +52,52 @@ def load_ml_data():
     import json
 
 
-#  Code used to import files for Movies, Ratings, and Raters.
-    # users = []
-    #
-    # with open('ml-1m/users.dat') as f:
-    #
-    #     reader = csv.DictReader([line.replace('::', '\t') for line in f],
-    #                             fieldnames='UserID::Gender::Age::Occupation::Zip-code'.split(
-    #                                 '::'),
-    #                             delimiter='\t')
-    #     for row in reader:
-    #         user = {
-    #             'fields': {
-    #                 'gender': row['Gender'],
-    #                 'age': row['Age'],
-    #                 'occupation': row['Occupation'],
-    #                 'zipcode': row['Zip-code'],
-    #             },
-    #             'model': 'moviedb.Rater',
-    #             'pk': int(row['UserID'])
-    #         }
-    #
-    #         users.append(user)
-    #
-    # with open('users.json', 'w') as f:   # place to dump/put the data
-    #     f.write(json.dumps(users))
-    #
-    # movies = []
-    #
-    # with open('ml-1m/movies.dat', encoding='Windows-1252') as f:
-    #
-    #     reader = csv.DictReader([line.replace('::', '\t') for line in f],
-    #                             fieldnames='MovieID::Title'.split('::'),
-    #                             delimiter='\t')
-    #     for row in reader:
-    #         movie = {
-    #             'fields': {
-    #                 'title': row['Title'],
-    #             },
-    #             'model': 'moviedb.Movie',
-    #             'pk': int(row['MovieID'])
-    #         }
-    #
-    #         movies.append(movie)
-    #
-    # with open('movies.json', 'w') as f:   # place to dump/put the data
-    #     f.write(json.dumps(movies))
+ Code used to import files for Movies, Ratings, and Raters.
+    users = []
+
+    with open('ml-1m/users.dat') as f:
+
+        reader = csv.DictReader([line.replace('::', '\t') for line in f],
+                                fieldnames='UserID::Gender::Age::Occupation::Zip-code'.split(
+                                    '::'),
+                                delimiter='\t')
+        for row in reader:
+            user = {
+                'fields': {
+                    'gender': row['Gender'],
+                    'age': row['Age'],
+                    'occupation': row['Occupation'],
+                    'zipcode': row['Zip-code'],
+                },
+                'model': 'moviedb.Rater',
+                'pk': int(row['UserID'])
+            }
+
+            users.append(user)
+
+    with open('users.json', 'w') as f:   # place to dump/put the data
+        f.write(json.dumps(users))
+
+    movies = []
+
+    with open('ml-1m/movies.dat', encoding='Windows-1252') as f:
+
+        reader = csv.DictReader([line.replace('::', '\t') for line in f],
+                                fieldnames='MovieID::Title'.split('::'),
+                                delimiter='\t')
+        for row in reader:
+            movie = {
+                'fields': {
+                    'title': row['Title'],
+                },
+                'model': 'moviedb.Movie',
+                'pk': int(row['MovieID'])
+            }
+
+            movies.append(movie)
+
+    with open('movies.json', 'w') as f:   # place to dump/put the data
+        f.write(json.dumps(movies))
 
     ratings = []
 
