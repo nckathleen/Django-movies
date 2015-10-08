@@ -19,7 +19,16 @@ def movie_detail(request, Movie_id):
                     {'movies': movies})
 
 
-def rater_detail(request, RaterID):
-    raters = Rater.objects.get(RaterID)
+def rater_detail(request, rater_id):
+    raters = Rater.objects.get(pk.rater_id)
+    movie_ratings = []
+    for rating in rater.rating_set.all():
+        movie_ratings.append({
+            'movie': rating.movie,
+            'ratings': '\u2605' * rating.ratings})
 
+    return render(request,
+                'review/rater_detail.html',
+                    {'rater': rater,
+                    'movie_ratings': movie_ratings})
 # def Rater_info(request):
