@@ -1,23 +1,18 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
+<h2> Login</h2>
 
-{% block content %}
-  <h2> Login</h2>
+{% if failed %}
+<h3> ERROR UPON LOGIN</h3>
+{% endif %}
 
-  {% if failed %}
-  <h3> ERROR UPON LOGIN</h3>
-  {% endif %}
+<form method="POST" action="{% url 'user_login' %}">
+  {% csrf token %} Username:
+  <input type="text" name="username" value="{{ username }}">
+  <br> Password:
+  <input type="password" name="password">
+  <br>
 
-  <form method="POST" action="{% url 'user_login' %}">
-    {% csrf token %}
-    Username: <input type="text" name="username" value="{{ username }}">
-    <br>
-    Password: <input type="password" name="password">
-    <br>
-
-    <input type="submit" value="Login">
-  </form>
-
-
-
+  <input type="submit" value="Login">
+</form>
 
 {% endblock %}

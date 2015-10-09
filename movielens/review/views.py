@@ -18,12 +18,12 @@ def top_20_movies(request):
                   {'movies': movies})
 
 
-def movie_detail(request, Movie_id):
-    movies = Movie.objects.get(pk=movie_id)
+def movie_detail(request, movie_id):
+    movie = Movie.objects.get(pk=movie_id)
     m_ratings = movie.average_rating()
     return render(request,
                   'review/top_movies.html',
-                  {'movies': movies})
+                  {'movie': movie})
 
 
 def rater_detail(request, rater_id):
