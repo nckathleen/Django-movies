@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
+
+from .models import Profile
 from .forms import UserForm
 # Create your views here.
 
@@ -39,6 +41,11 @@ def user_register(request):
 
             user.set_password(password)
             user.save()
+
+            profile = Profile(
+                user=user,
+                password='password'        
+            )
 
             user = authenticate(username=user.username,
                                 password=password)

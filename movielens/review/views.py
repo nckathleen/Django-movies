@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.db.models import Avg, Count
-from .models import Rater, Movie, Rating
+from .models import Rater, Movie
 
 
 def top_20_movies(request):
@@ -10,7 +10,7 @@ def top_20_movies(request):
         .filter(num_ratings__gte=50)
 
     movies = popular_movies.annotate(
-        Avg('rating__ratings')).order_by('-rating__ratings__avg')[20]
+        Avg('rating__ratings')).order_by('-rating__ratings__avg')[:20]
 
     return render(request,
                   'review/top_20_movies.html',
@@ -27,7 +27,7 @@ def movie_detail(request, movie_id):
 
 
 def rater_detail(request, rater_id):
-    raters = Rater.objects.get(pk.rater_id)
+    raters = Rater.objects.get(pk=rater_id)
     movie_ratings = []
     for rating in rater.rating_set.all():
         movie_ratings.append({
