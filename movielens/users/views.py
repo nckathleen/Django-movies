@@ -44,7 +44,7 @@ def user_register(request):
 
             profile = Profile(
                 user=user,
-                password='password'        
+                password='password'
             )
 
             user = authenticate(username=user.username,
