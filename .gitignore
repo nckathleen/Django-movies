@@ -1,7 +1,3 @@
 __pycache__
 __init__.py
-<<<<<<< HEAD
 moviedb/reviews/db.sqlite3
-=======
-movielens/db.sqlite3
->>>>>>> b7349f6e53770aed264b358ce58abf8a53610ced
