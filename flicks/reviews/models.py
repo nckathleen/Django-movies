@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import *
 
 
 # Create your models here.
@@ -9,10 +10,10 @@ class Movie(models.Model):
     title = models.CharField(max_length=255)
 
     def average_rating():
-        return
+        return self.rating_set.aggregate(models.Avg('stars'))['stars__avg']
 
     def __str__(self):
-        return "{} {}".format(self.id, self.title)
+        return "{}".format(self.id)
 
 
 class Rater(models.Model):
@@ -49,7 +50,6 @@ class Rating(models.Model):
 def load_movie_data():
     import csv
     import json
-    from faker import Faker
 
     movies = []
     with open('ml-1m/movies.dat', encoding='Windows-1252') as f:
@@ -101,7 +101,10 @@ def load_rating_data():
 def load_rater_data():
     import csv
     import json
+    from faker import Faker
 
+    count = 1
+    fake = Faker()
     raters = []
     with open('ml-1m/users.dat', encoding='Windows-1252') as f:
         reader = csv.DictReader([line.replace('::', '\t') for line in f],
@@ -110,11 +113,13 @@ def load_rater_data():
                                 delimiter='\t')
 
     for row in reader:
+        print('Reading row: {}'.format(count))
         auth_user = User.objects.create_user(username=fake.user_name,
                                             email=fake.email,
                                             password=make_password('password'),
                                             first_name=fake.first_name(),
                                             last_name=fake.last_name())
+        print('last name is: {}'.format(last_name))
         rater = {
             'fields': {
                 'gender': row['Gender'],
@@ -125,7 +130,7 @@ def load_rater_data():
             'model': 'flicks.Rater',
             'pk': auth_user.pk
         }
-
+        count += 1
         raters.append(rater)
         auth_user.save()
 
