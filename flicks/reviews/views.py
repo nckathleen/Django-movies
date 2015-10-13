@@ -12,14 +12,13 @@ def top_20_movies(request):
 
 def movie_detail(request, movie_id):
     movie = Movie.objects.get(pk=movie_id)
-    m_ratings = movie.average_rating()
     return render(request
                   'reviews/movie_detail.html',
                   {'movie': movie})
 
 
 def rater_detail(request, rater_id):
-    rater = Rater.objects.get(pk.rater_id)
+    rater = Rater.objects.get(pk=rater_id)
     movie_ratings = []
     for rating in rater.rating_set.all():
         movie_ratings.append({
