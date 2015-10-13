@@ -5,6 +5,6 @@
 
 <ul>
 {% for rating in movie.rating_set.all %}
-  <li>{{ rating.rater.pk }}: {{ rating.stars }}</li>
+  <li>{{ rating.rater }}: {{ rating.stars }}</li>
 {% endfor %}
 </ul>

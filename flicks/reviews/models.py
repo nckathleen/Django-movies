@@ -9,7 +9,7 @@ from django.contrib.auth.hashers import *
 class Movie(models.Model):
     title = models.CharField(max_length=255)
 
-    def average_rating():
+    def average_rating(self):
         return self.rating_set.aggregate(models.Avg('stars'))['stars__avg']
 
     def __str__(self):
@@ -24,7 +24,7 @@ class Rater(models.Model):
     gender_choices = [(male, 'Male'), (female, 'Female'), (unknown, 'Unknown')]
     gender = models.CharField(
         max_length=1, choices=gender_choices, default=unknown)
-    user = models.OneToOneField(User, primary_key=True)
+    user = models.OneToOneField(User, null=True)
 
     def __str__(self):
         return self.id
@@ -82,15 +82,15 @@ def load_rating_data():
                                     '::'),
                                 delimiter='\t')
     for row in reader:
+        print(row)
         star = {
             'fields': {
                 'movie_id': row['MovieID'],
                 'rating': row['Rating'],
             },
-            'model': 'flicks.Rating',
+            'model': 'reviews.Rating',
             'pk': int(row['UserID'])
         }
-
         stars.append(star)
 
     with open('ratings.json', 'w') as f:  # place to dump/put the ratings data
@@ -101,10 +101,18 @@ def load_rating_data():
 def load_rater_data():
     import csv
     import json
+    from random import choice
     from faker import Faker
 
     count = 1
     fake = Faker()
+
+    User.objects.all().delete()
+    '''
+from reviews.models import *
+load_rater_data()
+    '''
+
     raters = []
     with open('ml-1m/users.dat', encoding='Windows-1252') as f:
         reader = csv.DictReader([line.replace('::', '\t') for line in f],
@@ -112,27 +120,28 @@ def load_rater_data():
                                     '::'),
                                 delimiter='\t')
 
-    for row in reader:
-        print('Reading row: {}'.format(count))
-        auth_user = User.objects.create_user(username=fake.user_name,
-                                            email=fake.email,
-                                            password=make_password('password'),
-                                            first_name=fake.first_name(),
-                                            last_name=fake.last_name())
-        print('last name is: {}'.format(last_name))
-        rater = {
-            'fields': {
-                'gender': row['Gender'],
-                'age': row['Age'],
-                'occupation': row['Occupation'],
-                'zipcode': row['Zip-code'],
-            },
-            'model': 'flicks.Rater',
-            'pk': auth_user.pk
-        }
-        count += 1
-        raters.append(rater)
-        auth_user.save()
+        user_set = {fake.user_name() for _ in range(8000)}
+        user_list = [x for x in user_set]
+        for row in reader:
+            print('Reading row: {}'.format(count))
+            print(user_list[count])
+            auth_user = User.objects.create_user(username=user_list[count],
+                                            email=fake.email(),
+                                            password='password')
+            rater = {
+                'fields': {
+                    'gender': row['Gender'],
+                    'age': row['Age'],
+                    'occupation': row['Occupation'],
+                    'zipcode': row['Zip-code'],
+                },
+                'model': 'flicks.Rater',
+                'pk': auth_user.pk
+            }
+
+            raters.append(rater)
+            auth_user.save()
+            count += 1
 
     with open('raters.json', 'w') as f:  # place to dump/put the rater data
         f.write(json.dumps(raters))
