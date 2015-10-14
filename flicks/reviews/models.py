@@ -3,9 +3,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth.hashers import *
 
 
-# Create your models here.
-
-
 class Movie(models.Model):
     title = models.CharField(max_length=255)
 
@@ -143,7 +140,6 @@ load_rater_data()
                                 fieldnames='UserID::Gender::Age::Occupation::Zip-code'.split(
                                     '::'),
                                 delimiter='\t')
-
         user_set = {fake.user_name() for _ in range(8000)}
         user_list = [x for x in user_set]
         for row in reader:
@@ -152,7 +148,6 @@ load_rater_data()
                                             email=fake.email(),
                                             password='password',
                                             pk=row['UserID'])
-
             rater = {
                 'fields': {
                     'gender': row['Gender'],
@@ -163,7 +158,6 @@ load_rater_data()
                 'model': 'reviews.Rater',
                 'pk': auth_user.pk
             }
-
             raters.append(rater)
             auth_user.save()
             count += 1

@@ -20,5 +20,5 @@ from . import views
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'movie/(?P<movie_id>\d+)', views.movie_detail),
-    url(r'rater/(?P<rater_id>\d+)', views.raterdetail),
+    url(r'rater/(?P<rater_id>\d+)', views.rater_detail),
 ]
