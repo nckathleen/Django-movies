@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<h2><a href="{% url 'movie_detail' movie.movie_id %}>"{{ movie.title }}</a></h2>
+<h2>{{ movie.title }}</h2>
 
 <h4>{{ movie.average_rating|floatformat }}</h4>
 
