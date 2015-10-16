@@ -15,11 +15,11 @@ class Movie(models.Model):
 
 class Rater(models.Model):
 
-    MALE = "M"
-    FEMALE = "F"
+    MALE = 'M'
+    FEMALE = 'F'
     GENDER_CHOICES = (
-        (MALE, "Male"),
-        (FEMALE, "Female"),)
+        (MALE, 'Male'),
+        (FEMALE, 'Female'),)
 
     OCCUPATION_CHOICES = (
         (0, "other"),
@@ -51,7 +51,7 @@ class Rater(models.Model):
     user = models.OneToOneField(User, primary_key=True)
 
     def __str__(self):
-        return str(self.user)
+        return self.id
 
 
 class Rating(models.Model):
@@ -60,7 +60,7 @@ class Rating(models.Model):
     rater = models.ForeignKey(Rater)
 
     def __str__(self):
-        return 'Title: {}, Rater: {}, Stars: {}'.format(self.movie, self.rater, self.stars)
+        return 'Title: {}, Rater: {}, Stars: {}'.format(self.movie, self.rater, self.rating)
 
 
 # def load_ml_data():

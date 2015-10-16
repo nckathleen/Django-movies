@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from django.views.generic import TemplateView
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^login/$', user_views.user_login, name='user_login'),
+    url(r'^register/$', user_views.user_register, name='user_register')
     url(r'^reviews/', include('reviews.urls')),
     #url(r'^about/', TemplateView.as_view(template_name='top_movies.html'), name='about'),
 ]  # the about url above is called a "generic view"

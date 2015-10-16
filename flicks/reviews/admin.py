@@ -5,11 +5,11 @@ from .models import Movie, Rater, Rating
 list_display = []
 
 class MovieAdmin(admin.ModelAdmin):
-    list_display = ['title']
+    list_display = ['title', 'average_rating']
 
 
 class RaterAdmin(admin.ModelAdmin):
-    list_display = ['user', 'gender', 'age', 'occupation', 'zipcode']
+    list_display = ['user_id', 'gender']
 
 
 class RatingAdmin(admin.ModelAdmin):
@@ -17,4 +17,4 @@ class RatingAdmin(admin.ModelAdmin):
 
 admin.site.register(Movie, MovieAdmin)
 admin.site.register(Rater, RaterAdmin)
-admin.site.register(Rating, RatingAdmin)
+admin.site.register(Rating)
